@@ -25,12 +25,12 @@ public class Park {
         }
     }
 
-    public class Attraction {
+    private class Attraction {
         public String name;
         public String hours;
         public double price;
 
-        public Attraction(String name, String hours, double price) {
+        private Attraction(String name, String hours, double price) {
             this.name = name;
             this.hours = hours;
             this.price = price;
