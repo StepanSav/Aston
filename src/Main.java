@@ -1,21 +1,62 @@
 
 public class Main {
-    public static void main(String[] args) {
-        DOG dog1 = new DOG();
-        CAT cat1 = new CAT();
-        dog1.run(150);
-        dog1.swim(5);
-        cat1.run(100);
-        cat1.swim(10);
-        CAT[] cats = new CAT[3];
-        for (int i = 0; i < cats.length; i++) {
-            cats[i] = new CAT();
-            cats[i].setFoodBowl(10);
-            cats[i].eat(5);
-            System.out.println("Кот " + (i + 1) + " сытый: " + cats[i].isFull());
+
+    public static int sumArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+        if (array.length != 4 || array[0].length != 4) {
+            throw new MyArraySizeException("Размер массива должен быть 4x4.");
         }
-        System.out.println("Всего животных: " + Animal.getAnimalCount());
-        System.out.println("Всего собак: " + DOG.getDogCount());
-        System.out.println("Всего котов: " + CAT.getCatCount());
+        int sum = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(array[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException("Неверные данные в ячейке [" + i + "][" + j + "]: " + array[i][j]);
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        String[][] validArray = {
+                {"1", "2", "3", "4"},
+                {"5", "6", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
+
+        String[][] invalidSizeArray = {
+                {"1", "2"},
+                {"3", "4"}
+        };
+
+        String[][] invalidDataArray = {
+                {"1", "2", "3", "4"},
+                {"5", "six", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
+
+        try {
+            int result = sumArray(validArray);
+            System.out.println("Сумма элементов массива: " + result);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            sumArray(invalidSizeArray);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            sumArray(invalidDataArray);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }
