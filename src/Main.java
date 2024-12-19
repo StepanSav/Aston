@@ -1,7 +1,6 @@
-
 public class Main {
 
-    public static int sumArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+    public static int sumArray (String[][] array) throws MyArraySizeException, MyArrayDataException {
         if (array.length != 4 || array[0].length != 4) {
             throw new MyArraySizeException("Размер массива должен быть 4x4.");
         }
