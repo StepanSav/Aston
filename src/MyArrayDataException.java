@@ -1,4 +1,4 @@
-public class MyArrayDataException extends Exception {
+class MyArrayDataException extends Exception {
     public MyArrayDataException(String message) {
         super(message);
     }
