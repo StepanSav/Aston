@@ -1,61 +1,40 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
+    public static class UniqueWords {
+        public static void main(String[] args) {
+            String[] words = {
+                    "стол", "стул", "вилка", "ложка", "мышка",
+                    "подушка", "кровать", "лампа", "вода", "плойка",
+                    "стол", "стул", "кресло", "апельсин", "цифра"
+            };
+            Map<String, Integer> wordCount = new HashMap<>();
 
-    public static int sumArray (String[][] array) throws MyArraySizeException, MyArrayDataException {
-        if (array.length != 4 || array[0].length != 4) {
-            throw new MyArraySizeException("Размер массива должен быть 4x4.");
-        }
-        int sum = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                try {
-                    sum += Integer.parseInt(array[i][j]);
-                } catch (NumberFormatException e) {
-                    throw new MyArrayDataException("Неверные данные в ячейке [" + i + "][" + j + "]: " + array[i][j]);
-                }
+            for (String word : words) {
+                wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
             }
-        }
+            System.out.println("Уникальные слова и их количество:");
+            for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
 
-        return sum;
-    }
+            PhoneBook phoneBook = new PhoneBook();
 
-    public static void main(String[] args) {
-        String[][] validArray = {
-                {"1", "2", "3", "4"},
-                {"5", "6", "7", "8"},
-                {"9", "10", "11", "12"},
-                {"13", "14", "15", "16"}
-        };
+            // Добавляем записи в телефонный справочник
+            phoneBook.add("Иванов", "123-456");
+            phoneBook.add("Петров", "987-654");
+            phoneBook.add("Иванов", "321-654");
+            phoneBook.add("Сидоров", "456-789");
+            phoneBook.add("Петров", "654-321");
 
-        String[][] invalidSizeArray = {
-                {"1", "2"},
-                {"3", "4"}
-        };
+            // Получаем номера по фамилии
+            System.out.println("Номера телефонов для Иванова: " + phoneBook.get("Иванов"));
+            System.out.println("Номера телефонов для Петрова: " + phoneBook.get("Петров"));
 
-        String[][] invalidDataArray = {
-                {"1", "2", "3", "4"},
-                {"5", "six", "7", "8"},
-                {"9", "10", "11", "12"},
-                {"13", "14", "15", "16"}
-        };
-
-        try {
-            int result = sumArray(validArray);
-            System.out.println("Сумма элементов массива: " + result);
-        } catch (MyArraySizeException | MyArrayDataException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
-
-        try {
-            sumArray(invalidSizeArray);
-        } catch (MyArraySizeException | MyArrayDataException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
-
-        try {
-            sumArray(invalidDataArray);
-        } catch (MyArraySizeException | MyArrayDataException e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            // Вывод всех записей (для проверки)
+            System.out.println("\nВсе записи в телефонном справочнике:");
+            phoneBook.printAll();
         }
     }
 }
